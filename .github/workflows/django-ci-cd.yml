@@ -8,6 +8,20 @@ on:
 env:
   PYTHON_VERSION: '3.12.3'
 jobs:
+
+# 0. Secrets Scan (Gitleaks)
+# =========================
+  secrets-scan:
+    name: Secrets Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+          
   # Job 1: Code Quality and Linting
   lint:
     name: Code Quality Checks
