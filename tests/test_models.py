@@ -1,7 +1,5 @@
-# tests/test_models.py
-
-from django.test import TestCase
-from tests.models import Task   # ✅ FIXED IMPORT
+from django.tests import TestCase
+from tests.models import Task   # ✅ FIXED
 
 class TaskModelTest(TestCase):
 

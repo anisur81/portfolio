@@ -1,7 +1,7 @@
 # tests/test_views.py
 
 from django.test import TestCase
-from django.urls import reverse   # ✅ FIXED IMPORT
+from django.test_urls import reverse   # ✅ FIXED IMPORT
 
 class HomeViewTest(TestCase):
 
