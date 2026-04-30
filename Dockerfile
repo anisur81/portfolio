@@ -7,9 +7,13 @@ WORKDIR /portfolio
 # Copy the entire project into the container
 COPY . /portfolio
 
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/portfolio
 
-RUN pip install gunicorn
+RUN apt-get update && apt-get install -y build-essential
+RUN pip install --upgrade pip
+RUN pip install gunicorn django
 
 # Expose port 8000 for the Django development server final
 EXPOSE 8000
