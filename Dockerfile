@@ -7,6 +7,8 @@ WORKDIR /portfolio
 # Copy the entire project into the container
 COPY . /portfolio
 
+ENV PYTHONPATH=/portfolio
+
 RUN pip install gunicorn
 
 # Expose port 8000 for the Django development server final
