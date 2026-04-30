@@ -1,10 +1,7 @@
-# from django.shortcuts import render
-
-# Create your views here.
-# your_app/tests/test_views.py
+# tests/test_views.py
 
 from django.test import TestCase
-from django.test_urls import reverse
+from django.urls import reverse   # ✅ FIXED IMPORT
 
 class HomeViewTest(TestCase):
 

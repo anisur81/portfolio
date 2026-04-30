@@ -1,10 +1,10 @@
-# your_app/tests/test_urls.py
+# tests/test_urls.py
 
 from django.test import SimpleTestCase
-from django.test_urls import reverse, resolve
-from tests.test_views import home
+from django.urls import reverse, resolve
+from tests.test_views import home   # adjust if your view name differs
 
-class UrlTest(SimpleTestCase):
+class TestUrls(SimpleTestCase):
 
     def test_home_url_resolves(self):
         url = reverse("home")

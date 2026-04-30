@@ -1,10 +1,7 @@
-# from django.db import models
-
-# Create your models here.
-# your_app/tests/test_models.py
+# tests/test_models.py
 
 from django.test import TestCase
-from tests.test_models import Task
+from tests.models import Task   # ✅ FIXED IMPORT
 
 class TaskModelTest(TestCase):
 
