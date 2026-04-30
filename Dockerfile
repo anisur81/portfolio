@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy the entire project into the container
 COPY . .
 
+RUN pip install gunicorn
+
 # Expose port 8000 for the Django development server
 EXPOSE 8000
 
