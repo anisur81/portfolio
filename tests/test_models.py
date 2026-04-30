@@ -4,7 +4,7 @@
 # your_app/tests/test_models.py
 
 from django.test import TestCase
-from your_app.models import Task
+from tests.models import Task
 
 class TaskModelTest(TestCase):
 

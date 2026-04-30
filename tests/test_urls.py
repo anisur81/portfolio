@@ -2,7 +2,7 @@
 
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
-from your_app.views import home
+from tests.views import home
 
 class UrlTest(SimpleTestCase):
 
