@@ -2,10 +2,10 @@
 FROM python:3.12.3
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /devsecops_portfolio
 
 # Copy the entire project into the container
-COPY . .
+COPY . /devsecops_portfolio
 
 RUN pip install gunicorn
 
