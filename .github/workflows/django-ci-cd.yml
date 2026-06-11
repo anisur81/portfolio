@@ -116,7 +116,7 @@ jobs:
   
 # Job 3: Static application security testing (SAST) 
   security:
-    name: Security Scanning
+    name: Security Scanning SAST
     runs-on: ubuntu-latest
     
     steps:
@@ -130,7 +130,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install safety bandit
+        pip install safety bandit checkov
 
     # Safety Python dependency vulnerability scanner
     - name: Check for security vulnerabilities
@@ -154,6 +154,11 @@ jobs:
      # Codeql code analysis     
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+
+    - name: Run Checkov scan
+      run: |
+          checkov -d . --framework terraform,kubernetes,cloudformation \
+          --output cli --soft-fail
         
 # Job 4: software composition analysis (SCA) (trivy + semgrep + pipaudit)
   sca:
