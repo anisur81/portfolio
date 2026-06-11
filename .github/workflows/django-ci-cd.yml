@@ -91,6 +91,11 @@ jobs:
     - name: Run Ruff (Lint + Import Check)
       run: ruff check . --fix  
 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest coverage     
+    
      # Run tests + coverage
     - name: Run tests with coverage
       run: |
