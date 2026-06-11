@@ -169,8 +169,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           args: >
-            -Dsonar.organization=YOUR_ORG_NAME
-            -Dsonar.projectKey=YOUR_ORG_NAME_django-app
+            -Dsonar.organization=anisur81
+            -Dsonar.projectKey=anisur81_portfolio
             -Dsonar.projectName=django-app
             -Dsonar.sources=.
             -Dsonar.python.version=3.11
