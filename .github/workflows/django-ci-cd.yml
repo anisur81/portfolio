@@ -161,6 +161,16 @@ jobs:
       with:
         name: semgrep-report
         path: semgrep-results.json
+   
+   # production-ready SCA job using pip-audit
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install pip-audit
+
+    - name: Run SCA Scan (pip-audit)
+      run: |
+        pip-audit -r requirements.txt --fail-high
 
 # Job 3: Run Tests
   test:
