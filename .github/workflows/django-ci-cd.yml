@@ -17,8 +17,8 @@ env:
 
 jobs:
 
-# 0. Secrets Scan (Gitleaks and Trufflehog)
-# =========================
+# 1. Secrets Scan (Gitleaks and Trufflehog)
+ 
   secrets-scan:
     name: Secrets Scan
     runs-on: ubuntu-latest
@@ -49,7 +49,7 @@ jobs:
            base: ${{ github.event.before }}
            head: ${{ github.sha }}  
 
-  # Job 1: Code Quality and Linting
+  # Job 2: Code Quality (Formatter) and Linters (Static Analysis)
   lint:
     name: Code Quality Checks
     runs-on: ubuntu-latest
@@ -79,11 +79,11 @@ jobs:
     - name: Run isort (Import Sorting)
       run: isort .
 
-    # Linter - Detect style and syntax issues
+    # Linter - Detect style and basic syntax issues
     - name: Run Flake8 (Linting)
       run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
-    # Advanced Linter - Deep code quality analysis
+    # Advanced Linter - Very strict code quality + design checks
     - name: Run Pylint
       run: pylint **/*.py --exit-zero
 
@@ -92,7 +92,7 @@ jobs:
       run: ruff check . --fix  
 
   
-# Job 2: Static application security testing (SAST) 
+# Job 3: Static application security testing (SAST) 
   security:
     name: Security Scanning
     runs-on: ubuntu-latest
@@ -114,7 +114,7 @@ jobs:
     - name: Check for security vulnerabilities
       run: safety check --json
     
-    # Bandit with OWASP check
+    # Bandit with OWASP check specific for python
     - name: Run Bandit security scan
       run: bandit -r . -ll -f json -o bandit-report.json
     
@@ -124,7 +124,7 @@ jobs:
       with:
         config: "p/security-audit"
     
-# Job 3: software composition analysis (SCA)
+# Job 4: software composition analysis (SCA) (trivy + semgrep + pipaudit)
   sca:
    name: SCA with trivy-semgrep
    runs-on: ubuntu-latest
@@ -176,7 +176,7 @@ jobs:
           exit 1
         fi
 
-# Job 3: Run Tests
+# Job 5: Run Tests
   test:
     name: Run Tests
     runs-on: ubuntu-latest
