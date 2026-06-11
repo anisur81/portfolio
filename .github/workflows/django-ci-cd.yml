@@ -3,6 +3,7 @@ name: Django CI/CD Pipeline
 # Add required permissions to your workflow
 permissions:
   contents: read
+  actions: read
   security-events: write
   
 on:
@@ -144,7 +145,16 @@ jobs:
       uses: returntocorp/semgrep-action@v1
       with:
         config: "p/security-audit"
-    
+   # Codeql  initialize
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+          languages: python
+          queries: security-extended,security-and-quality   
+     # Codeql code analysis     
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+        
 # Job 4: software composition analysis (SCA) (trivy + semgrep + pipaudit)
   sca:
    name: SCA with trivy-semgrep
@@ -237,7 +247,7 @@ jobs:
 
 
 
-# Job 4: Build Docker Image and Push to GitHub Container Registry
+# Job 6: Build Docker Image and Push to GitHub Container Registry
   docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
