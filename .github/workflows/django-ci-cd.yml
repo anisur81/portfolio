@@ -85,7 +85,12 @@ jobs:
      
      #  Ruff (Replaces Flake8 + isort)
     - name: Run Ruff (Lint + Import Check)
-      run: ruff check .  
+      run: ruff check . --fix  
+    
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: p/owasp-top-ten  
   
 # Job 2: Security Checks
   security:
