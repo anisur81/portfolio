@@ -37,7 +37,7 @@ jobs:
         # TRUFFLEHOG Scanning
         
       - name: Run TruffleHog Scan
-        uses: trufflesecurity/trufflehog@v3
+        uses: trufflesecurity/trufflehog@v3.82.8
         with:
            path: ./
            base: ${{ github.event.before }}
