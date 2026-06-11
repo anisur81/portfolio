@@ -12,7 +12,7 @@ env:
 
 jobs:
 
-# 0. Secrets Scan (Gitleaks)
+# 0. Secrets Scan (Gitleaks and Trufflehog)
 # =========================
   secrets-scan:
     name: Secrets Scan
@@ -24,6 +24,14 @@ jobs:
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
+        
+        # TRUFFLEHOG SCAN
+      - name: Run TruffleHog Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+           path: ./
+           base: main
+           head: HEAD  
 
   # Job 1: Code Quality and Linting
   lint:
