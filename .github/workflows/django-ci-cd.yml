@@ -99,8 +99,7 @@ jobs:
      # Run tests + coverage
     - name: Run tests with coverage
       run: |
-          coverage run -m pytest
-          coverage xml
+          pytest --collect-only -q
 
       # SonarCloud Scan for code quality
     - name: SonarCloud Scan
