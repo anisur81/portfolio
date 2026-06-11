@@ -134,7 +134,7 @@ jobs:
 
     # Safety Python dependency vulnerability scanner
     - name: Check for security vulnerabilities
-      run: PYTHONWARNINGS="ignore" safety check --json --full-report
+      run: PYTHONWARNINGS="ignore" safety check --json > safety-report.json
     
     # Bandit with OWASP check specific for python
     - name: Run Bandit security scan
