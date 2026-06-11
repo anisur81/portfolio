@@ -91,6 +91,23 @@ jobs:
     - name: Run Ruff (Lint + Import Check)
       run: ruff check . --fix  
 
+     # Run tests + coverage
+    - name: Run tests with coverage
+      run: |
+          coverage run -m pytest
+          coverage xml
+
+      # SonarCloud Scan for code quality
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+          args: >
+            -Dsonar.projectKey=anisur81_portfolio
+            -Dsonar.organization=anisur81
+            -Dsonar.python.coverage.reportPaths=coverage.xml 
+    
   
 # Job 3: Static application security testing (SAST) 
   security:
