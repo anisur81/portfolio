@@ -1,5 +1,10 @@
 name: Django CI/CD Pipeline
 
+# Add required permissions to your workflow
+permissions:
+  contents: read
+  security-events: write
+  
 on:
   push:
     branches: [ main, develop ]
@@ -30,7 +35,8 @@ jobs:
 
        # Add SARIF upload to GitHub Security tab
       - name: Upload Gitleaks SARIF
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
+        if: github.ref == 'refs/heads/main'
         with:
           sarif_file: results.sarif
     
