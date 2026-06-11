@@ -117,18 +117,35 @@ jobs:
     # Bandit with OWASP check
     - name: Run Bandit security scan
       run: bandit -r . -ll -f json -o bandit-report.json
-
+    
+    # Semgrep Enterprise SAST 
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: "p/security-audit"
     
 # Job 3: software composition analysis (SCA)
-  semgrep:
-   name: Semgrep OWASP SAST Scan dependency check
+  sca:
+   name: SCA with trivy-semgrep
    runs-on: ubuntu-latest
-
+   
    steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Semgrep Enterprise SAST with OWASP check
+    # Trivy for SCA
+    - name: Install Trivy
+      run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.1_Linux-64bit.deb
+          sudo dpkg -i trivy_0.50.1_Linux-64bit.deb
+
+    - name: Run Trivy Filesystem Scan
+      run: |
+          trivy fs . --severity HIGH,CRITICAL --exit-code 1
+
+    # Semgrep for SCA 
     - name: Run Semgrep
       uses: returntocorp/semgrep-action@v1
       with:
