@@ -71,28 +71,28 @@ jobs:
     - name: Install gunicorn dependencies
       run: pip install gunicorn     
 
+    # Formatter - Auto-format Python code
     - name: Run Black (Code Formatting)
       run: black .
-    
+   
+    # Import Formatter - Sort and organize imports
     - name: Run isort (Import Sorting)
       run: isort .
-    
+
+    # Linter - Detect style and syntax issues
     - name: Run Flake8 (Linting)
       run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    
+
+    # Advanced Linter - Deep code quality analysis
     - name: Run Pylint
       run: pylint **/*.py --exit-zero
-     
-     #  Ruff (Replaces Flake8 + isort)
+
+     # Fast Linter or Formatter Replaces Flake8 + isort + many plugins
     - name: Run Ruff (Lint + Import Check)
       run: ruff check . --fix  
-    
-    - name: Run Semgrep
-      uses: returntocorp/semgrep-action@v1
-      with:
-        config: p/owasp-top-ten  
+
   
-# Job 2: Security Checks
+# Job 2: Static application security testing (SAST) 
   security:
     name: Security Scanning
     runs-on: ubuntu-latest
@@ -109,12 +109,36 @@ jobs:
     - name: Install dependencies
       run: |
         pip install safety bandit
-    
+
+    # Safety Python dependency vulnerability scanner
     - name: Check for security vulnerabilities
       run: safety check --json
     
+    # Bandit with OWASP check
     - name: Run Bandit security scan
       run: bandit -r . -ll -f json -o bandit-report.json
+
+    
+# Job 3: software composition analysis (SCA)
+  semgrep:
+   name: Semgrep OWASP SAST Scan dependency check
+   runs-on: ubuntu-latest
+
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Semgrep Enterprise SAST with OWASP check
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: p/owasp-top-ten
+
+    - name: Upload Semgrep report
+      uses: actions/upload-artifact@v4
+      with:
+        name: semgrep-report
+        path: semgrep-results.json
 
 # Job 3: Run Tests
   test:
