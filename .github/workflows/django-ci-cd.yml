@@ -21,7 +21,7 @@ jobs:
 # 1. Secrets Scan (Gitleaks and Trufflehog)
  
   secrets-scan:
-    name: Secrets Scan
+    name: Secrets Scan with gitleaks and trufflehog
     runs-on: ubuntu-latest
 
     steps:
@@ -159,6 +159,28 @@ jobs:
       run: |
           checkov -d . --framework terraform,kubernetes,cloudformation \
           --output cli --soft-fail
+
+    # Sonarqube SAST checking
+    
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          args: >
+            -Dsonar.organization=YOUR_ORG_NAME
+            -Dsonar.projectKey=YOUR_ORG_NAME_django-app
+            -Dsonar.projectName=django-app
+            -Dsonar.sources=.
+            -Dsonar.python.version=3.11
+            -Dsonar.exclusions=**/migrations/**,**/venv/**,**/__pycache__/**
+
+    - name: Quality Gate Check (optional but recommended)
+      uses: sonarsource/sonarqube-quality-gate-action@v1
+      env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
         
 # Job 4: software composition analysis (SCA) (trivy + semgrep + pipaudit)
   sca:
