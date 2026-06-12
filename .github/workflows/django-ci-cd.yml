@@ -98,10 +98,15 @@ jobs:
         pip install pytest django pytest-django coverage     
     
      # Run tests + coverage
+    #- name: Run tests with coverage
+     # run: |
+     #     pytest --collect-only || exit 0
+    
     - name: Run tests with coverage
       run: |
-          pytest --collect-only || exit 0
-
+          coverage run manage.py test
+          coverage xml
+    
       # SonarCloud Scan for code quality
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
