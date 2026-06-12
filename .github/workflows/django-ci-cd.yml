@@ -225,7 +225,7 @@ jobs:
         run: |
           kubectl create deployment demo \
            --image=ghcr.io/${{ github.repository }}:${{ github.sha }}
-           - name: Port Forward
+       
       - name: Port forward 
         run: |
           kubectl port-forward svc/demo 8080:80 &
