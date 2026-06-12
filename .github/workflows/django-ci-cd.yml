@@ -130,7 +130,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install safety bandit checkov
+        pip install safety bandit checkov coverage
 
     # Safety Python dependency vulnerability scanner
     - name: Check for security vulnerabilities
@@ -176,8 +176,16 @@ jobs:
             -Dsonar.python.version=3.11
             -Dsonar.exclusions=**/migrations/**,**/venv/**,**/__pycache__/**
 
+    - name: Run Tests with Coverage for Sonarqube
+      run: |
+           coverage run manage.py test
+           coverage xml
+
+    - name: Verify Coverage
+      run: ls -la coverage.xml
+    
     - name: Quality Gate Check (optional but recommended)
-      uses: sonarsource/sonarqube-quality-gate-action@v1
+      uses: sonarsource/sonarqube-quality-gate-action@v1  
       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
