@@ -224,7 +224,7 @@ jobs:
       - name: Deploy app
         run: |
           kubectl create deployment demo \
-           --image=ghcr.io/${{ github.repository }}/:${{ github.sha }}
+           --image=ghcr.io/${{ github.repository }}:${{ github.sha }}
            - name: Port Forward
       - name: Port forward 
         run: |
