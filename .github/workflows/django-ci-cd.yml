@@ -220,13 +220,23 @@ jobs:
       - name: Create cluster
         run: |
           kind create cluster
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+           name: image-tar    
+
+      - name: Load image
+        run: |   
           docker load -i image.tar
-          kind load docker-image portfolio:${{ github.sha }}
+          kind load docker-image ghcr.io/${{ github.repository }}:${{ github.sha }}
+          #kind load docker-image portfolio:${{ github.sha }}
      
       - name: Deploy app
         run: |
-          kubectl create deployment demo --image=portfolio:${{ github.sha }}
-           #--image=ghcr.io/${{ github.repository }}:${{ github.sha }}
+          kubectl create deployment demo \
+           --image=ghcr.io/${{ github.repository }}:${{ github.sha }}
+            #--image=portfolio:${{ github.sha }}
           kubectl expose deployment demo \
            --type=ClusterIP \
            --port=8000 \
@@ -389,7 +399,14 @@ jobs:
         run: |
                 docker save ghcr.io/${{ github.repository }}:${{ github.sha }} \
                 -o image.tar
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+           name: image-tar
+           path: image.tar
 
+
+           
 
 
 
