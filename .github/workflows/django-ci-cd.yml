@@ -220,6 +220,7 @@ jobs:
       - name: Create cluster
         run: |
           kind create cluster
+          docker load -i image.tar
           kind load docker-image portfolio:${{ github.sha }}
      
       - name: Deploy app
@@ -382,6 +383,19 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}        
- 
-   
+            ghcr.io/${{ github.repository }}:${{ github.sha }}   
+
+      - name: Save image
+        run: |
+                docker save ghcr.io/${{ github.repository }}:${{ github.sha }} \
+                -o image.tar
+
+
+
+
+
+
+
+
+
+
