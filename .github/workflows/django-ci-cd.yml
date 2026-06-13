@@ -221,16 +221,14 @@ jobs:
         run: |
           kind create cluster
 
-      - name: Download image artifact
-        uses: actions/download-artifact@v4
-        with:
-           name: image-tar    
+       # Build Docker image
+      - name: Build image
+        run: docker build -t portfolio:${{ github.sha }} .
 
-      - name: Load image
-        run: |   
-          docker load -i image.tar
-          kind load docker-image ghcr.io/${{ github.repository }}:${{ github.sha }}
-          #kind load docker-image portfolio:${{ github.sha }}
+    # Load image into Kind
+      - name: Load image into Kind
+        run: kind load docker-image portfolio:${{ github.sha }} 
+     
      
       - name: Deploy app
         run: |
@@ -394,16 +392,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}   
-
-      - name: Save image
-        run: |
-                docker save ghcr.io/${{ github.repository }}:${{ github.sha }} \
-                -o image.tar
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v4
-        with:
-           name: image-tar
-           path: image.tar
+ 
 
 
            
