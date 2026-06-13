@@ -264,7 +264,7 @@ jobs:
           docker run --network host \
           ghcr.io/zaproxy/zaproxy:stable \
           zap-baseline.py \
-          -t http://localhost:8000          
+          -t http://localhost:8000 -I        
         
 # Job 4: software composition analysis (SCA) (trivy + semgrep + pipaudit)
   sca:
