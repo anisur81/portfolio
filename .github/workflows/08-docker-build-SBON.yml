@@ -1,5 +1,6 @@
 name: Docker buil and SBOM
-    permissions:
+
+permissions:
       contents: read
       packages: write
       security-events: write
