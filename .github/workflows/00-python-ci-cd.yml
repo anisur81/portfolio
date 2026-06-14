@@ -7,15 +7,11 @@ permissions:
   security-events: write
   
 on:
- # push:
-  #  branches:
-  #    - main
-    #  - develop
+  push:
+   branches: [ main, develop ]
 
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [ main, develop ]
 env:
   PYTHON_VERSION: '3.12.3'
   DJANGO_SETTINGS_MODULE: portfolio.settings
@@ -23,52 +19,23 @@ env:
 jobs:
 
   secret-scan:
-    uses: ./.github/workflows/reusable-secret-scan.yml
+    uses: ./.github/workflows/01-secret-scan.yml
 
-  quality:
+  code-formating:
     needs: secret-scan
-    uses: ./.github/workflows/reusable-quality.yml
+    uses: ./.github/workflows/02-code-formatting.yml
 
-  sca:
-    needs: quality
-    uses: ./.github/workflows/reusable-sca.yml
+  linting:
+    needs: secret-scan
+    uses: ./.github/workflows/03-code-linting.yml
 
-  tests:
-    needs: sca
-    uses: ./.github/workflows/reusable-test.yml
+  SCA:
+    needs: secret-scan 
+    uses: ./.github/workflows/04-SCA-dependency-scan.yml
 
-  sast:
-    needs: tests
-    uses: ./.github/workflows/reusable-sast.yml
+  SAST:
+    needs: SCA
+    uses: ./.github/workflows/05-SAST-security.yml
 
-  iac-scan:
-    needs: sast
-    uses: ./.github/workflows/reusable-iac-scan.yml
-
-  build-image:
-    needs: iac-scan
-    uses: ./.github/workflows/reusable-build-image.yml
-    secrets: inherit
-
-  image-scan:
-    needs: build-image
-    uses: ./.github/workflows/reusable-image-scan.yml
-
-  deploy-staging:
-    needs: image-scan
-    uses: ./.github/workflows/reusable-deploy-staging.yml
-    secrets: inherit
-
-  dast:
-    needs: deploy-staging
-    uses: ./.github/workflows/reusable-dast.yml
-
-  smoke-test:
-    needs: dast
-    uses: ./.github/workflows/reusable-smoke-test.yml
-
-  deploy-production:
-    if: github.ref == 'refs/heads/main'
-    needs: smoke-test
-    uses: ./.github/workflows/reusable-deploy-prod.yml
-    secrets: inherit
+  
+ 
