@@ -39,3 +39,10 @@ jobs:
   SAST:
     needs: SCA
     uses: ./.github/workflows/05-SAST-security.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+
+
+
