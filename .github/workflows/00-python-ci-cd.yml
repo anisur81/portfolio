@@ -4,6 +4,7 @@ name: Enterprise CI/CD Pipeline
 permissions:
   contents: read
   actions: read
+  packages: write
   security-events: write
   
 on:
