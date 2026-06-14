@@ -32,7 +32,6 @@ jobs:
     
     - name: Run tests with coverage
       run: |
-          cd portfolio
           coverage run manage.py test
           coverage xml
     
