@@ -1,14 +1,11 @@
-
 name: Code Quality
-
 on:
-   workflow_call:
+  workflow_call:
 
-job:  
-   code-quality:
+jobs:  
+ code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
-    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
