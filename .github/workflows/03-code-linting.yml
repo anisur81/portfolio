@@ -1,6 +1,9 @@
 name: Code linting
 on:
   workflow_call:
+   secrets:
+      SONAR_TOKEN:
+        required: true
 jobs:
   linting:
     runs-on: ubuntu-latest
