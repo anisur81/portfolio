@@ -7,6 +7,9 @@ permissions:
       
 on:
   workflow_call:
+   secrets:
+      GITHUB_TOKEN:
+        required: true
 jobs:
 # Job 6: Build Docker Image and Push to GitHub Container Registry
   docker:
@@ -38,7 +41,13 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}   
+      
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0     
  
+
+
+
 
 
 
