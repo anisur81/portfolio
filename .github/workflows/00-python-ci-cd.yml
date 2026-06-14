@@ -24,4 +24,6 @@ jobs:
   code-formating:
     needs: secret-scan
     uses: ./.github/workflows/02-code-formatting.yml  
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
  
