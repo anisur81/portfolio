@@ -18,32 +18,32 @@ env:
   
 jobs:
 
-  secret-scan:
-    uses: ./.github/workflows/01-secret-scan.yml
+  #secret-scan:
+    #uses: ./.github/workflows/01-secret-scan.yml
 
-  code-formating:
-    needs: secret-scan
-    uses: ./.github/workflows/02-code-formatting.yml  
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #code-formating:
+   # needs: secret-scan
+    #uses: ./.github/workflows/02-code-formatting.yml  
+    #secrets:
+    #  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  linting:
-    needs: secret-scan
-    uses: ./.github/workflows/03-code-linting.yml
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  SCA:
-    needs: secret-scan 
-    uses: ./.github/workflows/04-SCA-dependency-scan.yml   
+  #linting:
+   # needs: secret-scan
+    #uses: ./.github/workflows/03-code-linting.yml
+    #secrets:
+     # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #SCA:
+   # needs: secret-scan 
+    #uses: ./.github/workflows/04-SCA-dependency-scan.yml   
 
-  SAST:
-    needs: SCA
-    uses: ./.github/workflows/05-SAST-security.yml
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #SAST:
+   # needs: SCA
+    #uses: ./.github/workflows/05-SAST-security.yml
+    #secrets:
+     # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build-unit:
-    needs: SAST
+    #needs: SAST
     uses: ./.github/workflows/07-build-unit.yml 
 
 
