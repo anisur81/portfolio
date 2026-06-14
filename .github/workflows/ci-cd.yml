@@ -1,5 +1,11 @@
 name: Enterprise CI/CD Pipeline
 
+# Add required permissions to your workflow
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+  
 on:
  # push:
   #  branches:
@@ -10,11 +16,10 @@ on:
     branches:
       - main
       - develop
-
-permissions:
-  contents: read
-  security-events: write
-
+env:
+  PYTHON_VERSION: '3.12.3'
+  DJANGO_SETTINGS_MODULE: portfolio.settings
+  
 jobs:
 
   secret-scan:
