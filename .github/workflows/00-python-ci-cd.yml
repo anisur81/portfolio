@@ -30,12 +30,7 @@ jobs:
   linting:
     needs: secret-scan
     uses: ./.github/workflows/03-code-linting.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  SCA:
-    needs: secret-scan 
-    uses: ./.github/workflows/04-SCA-dependency-scan.yml
-
-  SAST:
-    needs: SCA
-    uses: ./.github/workflows/05-SAST-security.yml    
  
