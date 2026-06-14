@@ -26,10 +26,13 @@ jobs:
      # Fast Linter or Formatter Replaces Flake8 + isort + many plugins
     - name: Run Ruff (Lint + Import Check)
       run: ruff check . --fix  
-        
+    
+    - name: Show repo structure
+      run: ls -R     
+    
     - name: Run tests with coverage
-      working-directory: portfolio
       run: |
+          cd portfolio
           coverage run manage.py test
           coverage xml
     
