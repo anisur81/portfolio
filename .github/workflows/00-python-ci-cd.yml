@@ -48,8 +48,7 @@ jobs:
 
   Build-image: 
     uses: ./.github/workflows/09-docker-build-SBOM.yml
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
 
 
 
