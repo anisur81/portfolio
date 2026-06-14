@@ -42,9 +42,14 @@ jobs:
     #secrets:
      # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  build-unit:
+  #build-unit:
     #needs: SAST
-    uses: ./.github/workflows/07-build-unit.yml 
+    #uses: ./.github/workflows/07-build-unit.yml 
+
+  Build-image: 
+    uses: ./.github/workflows/09-docker-build-SBOM.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
