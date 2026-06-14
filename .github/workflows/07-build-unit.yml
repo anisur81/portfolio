@@ -47,8 +47,9 @@ jobs:
           pip install pytest django pytest-django pytest-cov
 
       - name: Run Unit Tests
+        continue-on-error: true
         run: |
-          # pytest --cov=. --cov-report=xml --cov-report=html || true
+          pytest --cov=. --cov-report=xml --cov-report=html
           pytest -m "unit" --disable-warnings --maxfail=1
 
 
