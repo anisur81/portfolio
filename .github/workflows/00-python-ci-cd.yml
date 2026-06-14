@@ -47,12 +47,16 @@ jobs:
     #needs: SAST
     #uses: ./.github/workflows/07-build-unit.yml 
 
-  Build-image: 
-    uses: ./.github/workflows/09-docker-build-SBOM.yml
+  #Build-image: 
+    #uses: ./.github/workflows/09-docker-build-SBOM.yml
 
-  Scan-image: 
-    needs: Build-image
-    uses: ./.github/workflows/10-image-scan.yml
+  #Scan-image: 
+   # needs: Build-image
+    #uses: ./.github/workflows/10-image-scan.yml
+
+   Staging-image: 
+     #needs: Build-image
+     uses: ./.github/workflows/11-Staging-image.yml
         
 
 
