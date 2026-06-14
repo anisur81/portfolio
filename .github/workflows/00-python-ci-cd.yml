@@ -21,6 +21,7 @@ jobs:
   secret-scan:
     uses: ./.github/workflows/01-secret-scan.yml
 
-
-  
+  code-formating:
+    needs: secret-scan
+    uses: ./.github/workflows/02-code-formatting.yml  
  
