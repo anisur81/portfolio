@@ -1,0 +1,69 @@
+name: Enterprise CI/CD Pipeline
+
+on:
+ # push:
+  #  branches:
+  #    - main
+    #  - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  secret-scan:
+    uses: ./.github/workflows/reusable-secret-scan.yml
+
+  quality:
+    needs: secret-scan
+    uses: ./.github/workflows/reusable-quality.yml
+
+  sca:
+    needs: quality
+    uses: ./.github/workflows/reusable-sca.yml
+
+  tests:
+    needs: sca
+    uses: ./.github/workflows/reusable-test.yml
+
+  sast:
+    needs: tests
+    uses: ./.github/workflows/reusable-sast.yml
+
+  iac-scan:
+    needs: sast
+    uses: ./.github/workflows/reusable-iac-scan.yml
+
+  build-image:
+    needs: iac-scan
+    uses: ./.github/workflows/reusable-build-image.yml
+    secrets: inherit
+
+  image-scan:
+    needs: build-image
+    uses: ./.github/workflows/reusable-image-scan.yml
+
+  deploy-staging:
+    needs: image-scan
+    uses: ./.github/workflows/reusable-deploy-staging.yml
+    secrets: inherit
+
+  dast:
+    needs: deploy-staging
+    uses: ./.github/workflows/reusable-dast.yml
+
+  smoke-test:
+    needs: dast
+    uses: ./.github/workflows/reusable-smoke-test.yml
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: smoke-test
+    uses: ./.github/workflows/reusable-deploy-prod.yml
+    secrets: inherit
