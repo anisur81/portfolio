@@ -1,0 +1,39 @@
+name: Code linting
+on:
+  workflow_call:
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+# Linter - Detect style and basic syntax issues
+    - name: Run Flake8 (Linting)
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    # Advanced Linter - Very strict code quality + design checks
+    - name: Run Pylint
+      run: pylint **/*.py --exit-zero
+
+     # Fast Linter or Formatter Replaces Flake8 + isort + many plugins
+    - name: Run Ruff (Lint + Import Check)
+      run: ruff check . --fix  
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest django pytest-django coverage   
+        
+    - name: Run tests with coverage
+      run: |
+          coverage run manage.py test
+          coverage xml
+    
+      # SonarCloud Scan for code quality
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+          args: >
+            -Dsonar.projectKey=anisur81_portfolio
+            -Dsonar.organization=anisur81
+            -Dsonar.python.coverage.reportPaths=coverage.xml       
