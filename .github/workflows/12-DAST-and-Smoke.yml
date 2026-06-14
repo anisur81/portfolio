@@ -49,7 +49,7 @@ jobs:
       - name: Check deployment
         run: |
           kubectl wait --for=condition=Ready nodes --all --timeout=120s
-          kubectl rollout status deployment/demo --timeout=900s
+          kubectl rollout status deployment/demo --timeout=800s
           kubectl get all
           kubectl get events --sort-by=.metadata.creationTimestamp
           kubectl get deployments
