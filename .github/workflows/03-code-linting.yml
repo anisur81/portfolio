@@ -6,6 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 # Linter - Detect style and basic syntax issues
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest django pytest-django coverage 
+        pip install flake8 pylint ruff
+
     - name: Run Flake8 (Linting)
       run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
@@ -16,11 +23,6 @@ jobs:
      # Fast Linter or Formatter Replaces Flake8 + isort + many plugins
     - name: Run Ruff (Lint + Import Check)
       run: ruff check . --fix  
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest django pytest-django coverage   
         
     - name: Run tests with coverage
       run: |
