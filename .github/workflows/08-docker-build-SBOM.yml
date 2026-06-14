@@ -1,4 +1,4 @@
-name: Docker buil and SBOM
+name: Docker build and SBOM
 
 permissions:
       contents: read
