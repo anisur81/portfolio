@@ -5,7 +5,7 @@ on:
 jobs:
 
  k8s-test:
-    name: k8s staging environment readyness 
+    name: DAST with OWASP ZAP and smoke test 
     runs-on: ubuntu-latest
   
     steps:
