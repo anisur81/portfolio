@@ -44,7 +44,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-django
+          pip install pytest pytest-django pytest-cov
 
       - name: Run Unit Tests
         run: |
@@ -67,3 +67,13 @@ jobs:
            path: htmlcov/  
 
    
+
+
+
+
+
+
+
+
+
+
