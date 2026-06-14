@@ -28,6 +28,7 @@ jobs:
       run: ruff check . --fix  
         
     - name: Run tests with coverage
+      working-directory: portfolio
       run: |
           coverage run manage.py test
           coverage xml
