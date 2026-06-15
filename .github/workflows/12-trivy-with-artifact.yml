@@ -16,14 +16,17 @@ jobs:
           docker load -i portfolio-image.tar
 
       - name: Scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: image
-          image-ref: myapp:${GITHUB_SHA}
+          image-ref: portfolio:${GITHUB_SHA}
           format: sarif
           output: trivy-image.sarif
 
-
+      - name: Upload Trivy Scan Results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+           sarif_file: trivy-image.sarif 
 
 
 
