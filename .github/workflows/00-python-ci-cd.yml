@@ -37,6 +37,12 @@ jobs:
    # needs: secret-scan 
     #uses: ./.github/workflows/04-SCA-dependency-scan.yml   
 
+  SCA:
+   # needs: secret-scan 
+    uses: ./.github/workflows/04-SCA-snyk-scan.yml     
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+     
   #SAST:
    # needs: SCA
     #uses: ./.github/workflows/05-SAST-security.yml
@@ -63,9 +69,9 @@ jobs:
      #uses: ./.github/workflows/12-trivy-with-artifact.yml
      #secrets:
      # github_sha: ${{ secrets.github_sha }}
-   DAST-Test: 
+   #DAST-Test: 
      #needs: Build-image
-     uses: ./.github/workflows/12-DAST-and-Smoke.yml  
+     #uses: ./.github/workflows/12-DAST-and-Smoke.yml  
         
 
 
