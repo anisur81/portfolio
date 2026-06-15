@@ -34,7 +34,11 @@ jobs:
     # Load image into Kind
       - name: Load image into Kind
         run: kind load docker-image portfolio:${{ github.sha }} 
-     
+
+      - name: Check Docker image size
+        run: |
+           SIZE=$(docker image inspect portfolio:${{ github.sha }} --format='{{.Size}}')
+           echo "Raw size: $SIZE bytes" 
      
       - name: Deploy app
         run: |
