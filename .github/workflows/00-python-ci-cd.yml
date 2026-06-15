@@ -54,12 +54,12 @@ jobs:
    # needs: Build-image
     #uses: ./.github/workflows/10-image-scan.yml
 
-   #Staging-image: 
+   Staging-image: 
      #needs: Build-image
-     #uses: ./.github/workflows/11-Staging-image.yml
-   DAST-Test: 
+     uses: ./.github/workflows/11-Staging-image.yml
+   #DAST-Test: 
      #needs: Build-image
-     uses: ./.github/workflows/12-DAST-and-Smoke.yml  
+     #uses: ./.github/workflows/12-DAST-and-Smoke.yml  
         
 
 
