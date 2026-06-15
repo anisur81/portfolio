@@ -1,0 +1,30 @@
+name: image Scan using artifact
+on:
+  workflow_call:
+
+
+jobs:
+  image-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+
+      - run: |
+          docker load -i portfolio-image.tar
+
+      - name: Scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: image
+          image-ref: myapp:${GITHUB_SHA}
+          format: sarif
+          output: trivy-image.sarif
+
+
+
+
+
+          
