@@ -35,6 +35,11 @@ jobs:
       - name: Test Python dependencies
         run: snyk test --file=requirements.txt
 
+
+
+
+        
+
       - name: Monitor project (optional)
         run: snyk monitor --file=requirements.txt
 
