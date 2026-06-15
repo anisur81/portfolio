@@ -1,6 +1,6 @@
 # Use the official Python image
 #FROM python:3.12.3
-FROM python:3.12-alpine
+FROM python:3.12.3-slim
 
 # Set the working directory in the container
 WORKDIR /portfolio
