@@ -1,7 +1,9 @@
 name: image Scan using artifact
 on:
   workflow_call:
-
+     secrets:
+      github_sha:
+        required: true
 
 jobs:
   image-scan:
@@ -19,7 +21,7 @@ jobs:
         uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: image
-          image-ref: portfolio:${GITHUB_SHA}
+          image-ref: portfolio:${{ github.sha }}
           format: sarif
           output: trivy-image.sarif
 
